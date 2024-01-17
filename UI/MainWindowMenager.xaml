@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RemontApp.UI"
         mc:Ignorable="d"
-        Title="MainWindowMenager" Height="450" Width="800">
+        Title="Remont" Height="450" Width="800">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="150"/>
@@ -14,11 +14,11 @@
         <Border BorderBrush="Black" BorderThickness=" 0 0 1 0">
             <Grid>
                 <Image Height="60" Width="60" VerticalAlignment="Top" Margin=" 0 15 0 0" />
-                <StackPanel Margin="0 100 0 0" VerticalAlignment="Top">
-                    <Button  Height="40" Margin=" 0 10 0 10"/>
-                    <Button Height="40" Margin=" 0 10 0 10"/>
+                <StackPanel Margin="0 100 0 0" VerticalAlignment="Top" Grid.Column="0">
+                    <Button x:Name="BtnStatistic"  Height="40" Margin=" 0 10 0 0" Content="Статистика" Background="Transparent" BorderThickness="0 1 0 0" Click="BtnStatistic_Click"/>
+                    <Button x:Name="BtnQRCode" Height="40" Margin=" 0 0 0 10" Content="QR-код" Background="Transparent"  BorderThickness="0 1 0 1" Click="BtnQRCode_Click"/>
                 </StackPanel>
-                <Button Height="40" VerticalAlignment="Bottom" Margin="0 10 0 30"/>
+                <Button x:Name="BtnExit" Height="40" VerticalAlignment="Bottom" Margin="0 10 0 30" Content="Выйти" Background="Transparent"  BorderThickness="0 1 0 1" Click="BtnExit_Click"/>
             </Grid>
         </Border>
         <Grid Grid.Column="1">
@@ -27,7 +27,7 @@
                 <RowDefinition/>
                 <RowDefinition Height="70"/>
             </Grid.RowDefinitions>
-            <TextBox Height="40" Width="400" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10 10 0 0"/>
+            <TextBox x:Name="TxtBoxSearch" Height="40" Width="400" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10 20 0 0"/>
             <ListView Grid.Row="1" Margin="10 0 10 0" x:Name="LBoxApplications" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="LBoxApplications_SelectionChanged" >
                 <ListView.View>
                     <GridView AllowsColumnReorder="False" >
@@ -44,7 +44,7 @@
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                            <Button Content="Удалить" Style="{DynamicResource ButtonStyleColumn}"/>
+                                            <Button x:Name="BtnDeleteApplication" Content="Удалить" Style="{DynamicResource ButtonStyleColumn}" Click="BtnDeleteApplication_Click"/>
                                             <Button Content="Редактировать" Style="{DynamicResource ButtonStyleColumn}"/>
                                             <Button Content="Завершить" Style="{DynamicResource ButtonStyleColumn}"/>
                                         </StackPanel>
@@ -55,6 +55,8 @@
                     </GridView>
                 </ListView.View>
             </ListView>
+            <Button Grid.Row="2" Height="40" Width="200" Style="{DynamicResource ButtonStyleBase}" Content="Добавить" HorizontalAlignment="Left" Margin="10"/>
+            <Label Content="{Binding ItemsSource.Count, ElementName=LBoxApplications, Mode=OneWay, StringFormat =Количество элементов: {0} }" Grid.Row="2" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="10"  />
         </Grid>
         
 

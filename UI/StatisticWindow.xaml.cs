@@ -15,18 +15,13 @@ using System.Windows.Shapes;
 namespace RemontApp.UI
 {
     /// <summary>
-    /// Логика взаимодействия для ExecutorWindow.xaml
+    /// Логика взаимодействия для StatisticWindow.xaml
     /// </summary>
-    public partial class MainWindowExecutor : Window
+    public partial class StatisticWindow : Window
     {
-        public MainWindowExecutor()
+        public StatisticWindow()
         {
             InitializeComponent();
-        }
-
-        private void BtnExit_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
         }
     }
 }

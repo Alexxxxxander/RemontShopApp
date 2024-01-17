@@ -112,6 +112,9 @@
     <Compile Include="UI\MainWindowMenager.xaml.cs">
       <DependentUpon>MainWindowMenager.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UI\StatisticWindow.xaml.cs">
+      <DependentUpon>StatisticWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\UserControl\UserControlPasswordBox.xaml.cs">
       <DependentUpon>UserControlPasswordBox.xaml</DependentUpon>
     </Compile>
@@ -140,6 +143,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="UI\MainWindowMenager.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\StatisticWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

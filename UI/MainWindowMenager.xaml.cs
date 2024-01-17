@@ -31,5 +31,25 @@ namespace RemontApp.UI
         {
 
         }
+
+        private void BtnStatistic_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void BtnQRCode_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void BtnExit_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void BtnDeleteApplication_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
