@@ -24,7 +24,7 @@ namespace RemontApp.UI
         {
             InitializeComponent();
 
-            LBoxApplications.ItemsSource = RemontPracticeEntities.GetContext().Applications.ToArray();
+            LBoxApplications.ItemsSource = RemontPracticeEntities.GetContext().Applications.ToList();
         }
 
         private void LBoxApplications_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -34,7 +34,9 @@ namespace RemontApp.UI
 
         private void BtnStatistic_Click(object sender, RoutedEventArgs e)
         {
-
+            StatisticWindow statisticWindow = new StatisticWindow();
+            statisticWindow.Show();
+            this.Close();
         }
 
         private void BtnQRCode_Click(object sender, RoutedEventArgs e)
@@ -49,6 +51,19 @@ namespace RemontApp.UI
 
         private void BtnDeleteApplication_Click(object sender, RoutedEventArgs e)
         {
+
+        }
+
+        private void TxtBoxSearch_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if( TxtBoxSearch.Text.Length > 0 )
+            {
+                LBoxApplications.ItemsSource = RemontPracticeEntities.GetContext().Applications.ToList().Where(x => x.Appliance.Contains(TxtBoxSearch.Text)).ToList();
+            }
+            else
+            {
+                LBoxApplications.ItemsSource = RemontPracticeEntities.GetContext().Applications.ToList() ;
+            }
 
         }
     }

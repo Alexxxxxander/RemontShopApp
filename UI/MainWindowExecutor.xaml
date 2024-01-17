@@ -48,8 +48,8 @@
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                            <Button Content="Удалить" Style="{DynamicResource ButtonStyleColumn}"/>
-                                            <Button Content="Редактировать" Style="{DynamicResource ButtonStyleColumn}"/>
+                                            <Button Content="Принял" Style="{DynamicResource ButtonStyleColumn}"/>
+                                            <Button Content="Закончил" Style="{DynamicResource ButtonStyleColumn}"/>
                                             <Button Content="Завершить" Style="{DynamicResource ButtonStyleColumn}"/>
                                         </StackPanel>
                                     </DataTemplate>
