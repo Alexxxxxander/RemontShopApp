@@ -106,18 +106,22 @@
     <Compile Include="DB\User.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="UI\AddAplicationWindow.xaml.cs">
+      <DependentUpon>AddAplicationWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\MainWindowExecutor.xaml.cs">
       <DependentUpon>MainWindowExecutor.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\MainWindowMenager.xaml.cs">
       <DependentUpon>MainWindowMenager.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\StatisticWindow.xaml.cs">
-      <DependentUpon>StatisticWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="UI\UserControl\UserControlPasswordBox.xaml.cs">
       <DependentUpon>UserControlPasswordBox.xaml</DependentUpon>
     </Compile>
+    <Page Include="UI\AddAplicationWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UI\Dictionary\DictionaryBase.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -143,10 +147,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="UI\MainWindowMenager.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UI\StatisticWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

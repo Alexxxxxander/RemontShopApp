@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RemontApp.DB;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -27,6 +28,18 @@ namespace RemontApp.UI
         private void BtnExit_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+        private void TxtBoxSearch_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (TxtBoxSearch.Text.Length > 0)
+            {
+                LBoxApplications.ItemsSource = RemontPracticeEntities.GetContext().Applications.ToList().Where(x => x.Appliance.Contains(TxtBoxSearch.Text)).ToList();
+            }
+            else
+            {
+                LBoxApplications.ItemsSource = RemontPracticeEntities.GetContext().Applications.ToList();
+            }
+
         }
     }
 }

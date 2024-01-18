@@ -27,17 +27,7 @@ namespace RemontApp.UI
             LBoxApplications.ItemsSource = RemontPracticeEntities.GetContext().Applications.ToList();
         }
 
-        private void LBoxApplications_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
 
-        }
-
-        private void BtnStatistic_Click(object sender, RoutedEventArgs e)
-        {
-            StatisticWindow statisticWindow = new StatisticWindow();
-            statisticWindow.Show();
-            this.Close();
-        }
 
         private void BtnQRCode_Click(object sender, RoutedEventArgs e)
         {
@@ -51,7 +41,12 @@ namespace RemontApp.UI
 
         private void BtnDeleteApplication_Click(object sender, RoutedEventArgs e)
         {
-
+            
+            DB.Application selected = (DB.Application)LBoxApplications.SelectedItem;           
+            if(RemontPracticeEntities.GetContext().Applications.Any( x=> x.Id == selected.Id ))
+            {
+                MessageBox.Show("Sha bi udalil");
+            }
         }
 
         private void TxtBoxSearch_TextChanged(object sender, TextChangedEventArgs e)
@@ -65,6 +60,12 @@ namespace RemontApp.UI
                 LBoxApplications.ItemsSource = RemontPracticeEntities.GetContext().Applications.ToList() ;
             }
 
+        }
+
+        private void BtnAddAplication_Click(object sender, RoutedEventArgs e)
+        {
+            AddAplicationWindow addAplicationWindow = new AddAplicationWindow();
+            addAplicationWindow.Show();
         }
     }
 }

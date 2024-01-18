@@ -11,55 +11,67 @@
             <ColumnDefinition Width="150"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <Border BorderBrush="Black" BorderThickness=" 0 0 1 0">
-            <Grid>
-                <Image Height="60" Width="60" VerticalAlignment="Top" Margin=" 0 15 0 0" />
-                <StackPanel Margin="0 100 0 0" VerticalAlignment="Top" Grid.Column="0">
-                </StackPanel>
-                <Button x:Name="BtnExit" 
-                        Height="40" 
-                        VerticalAlignment="Bottom"
-                        Margin="0 10 0 30" 
-                        Content="Выйти" 
-                        Background="Transparent"  
-                        BorderThickness="0 1 0 1" Click="BtnExit_Click"/>
-            </Grid>
-        </Border>
-        <Grid Grid.Column="1">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="70"/>
-                <RowDefinition/>
-                <RowDefinition Height="70"/>
-            </Grid.RowDefinitions>
-            <TextBox x:Name="TxtBoxSearch" Height="40" Width="400" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10 20 0 0"/>
-            <ListView Grid.Row="1" Margin="10 0 10 0" x:Name="LBoxApplications" d:ItemsSource="{d:SampleData ItemCount=5}" >
-                <ListView.View>
-                    <GridView AllowsColumnReorder="False" >
-                        <GridView.Columns>
-                            <GridViewColumn DisplayMemberBinding="{Binding Appliance}" Header="Устройство"></GridViewColumn>
-                            <GridViewColumn DisplayMemberBinding="{Binding DateStart}" Header="Дата подачи"/>
-                            <GridViewColumn DisplayMemberBinding="{Binding ProblemType.Name}" Header="Проблема"/>
-                            <GridViewColumn DisplayMemberBinding="{Binding Description}" Header="Описание"/>
-                            <GridViewColumn DisplayMemberBinding="{Binding Client.Phone}" Header="Номер клиента"/>
-                            <GridViewColumn DisplayMemberBinding="{Binding StatusApplication.Name}" Header="Статус заявки"/>
-                            <GridViewColumn DisplayMemberBinding="{Binding StageApplication.Name}" Header="Стадия заявки"/>
-                            <GridViewColumn DisplayMemberBinding="{Binding Employee.Surname}" Header="Исполнитель"/>
-                            <GridViewColumn>
-                                <GridViewColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                            <Button Content="Принял" Style="{DynamicResource ButtonStyleColumn}"/>
-                                            <Button Content="Закончил" Style="{DynamicResource ButtonStyleColumn}"/>
-                                            <Button Content="Завершить" Style="{DynamicResource ButtonStyleColumn}"/>
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </GridViewColumn.CellTemplate>
-                            </GridViewColumn>
-                        </GridView.Columns>
-                    </GridView>
-                </ListView.View>
-            </ListView>
-        </Grid>
+        <Rectangle Fill="#EAE7DC" Width="150" Margin="0 1 0 0"/>
+
+        <TabControl TabStripPlacement="Left" Grid.ColumnSpan="2" HorizontalAlignment="Left" BorderThickness="0">
+            <TabItem Style="{DynamicResource TabItemStyleBase}" Margin="-2 0 0 0" Height="40" Width="150" >
+                <TabItem.Header>
+                    <TextBlock Text="Главная" />
+                </TabItem.Header>
+                <TabItem.Content>
+                    <Border BorderBrush="White" BorderThickness="0" Margin="-3">
+                        <Grid Grid.Column="1">
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="70"/>
+                                <RowDefinition/>
+                                <RowDefinition Height="70"/>
+                            </Grid.RowDefinitions>
+                            <TextBox x:Name="TxtBoxSearch" Height="40" Width="400" Style="{DynamicResource TextBoxStyleBase}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10 20 0 0" TextChanged="TxtBoxSearch_TextChanged"/>
+                            <ListView Grid.Row="1" Margin="10 0 10 0" x:Name="LBoxApplications" d:ItemsSource="{d:SampleData ItemCount=5}" >
+                                <ListView.View>
+                                    <GridView AllowsColumnReorder="False" >
+                                        <GridView.Columns>
+                                            <GridViewColumn DisplayMemberBinding="{Binding Appliance}" Header="Устройство"></GridViewColumn>
+                                            <GridViewColumn DisplayMemberBinding="{Binding DateStart}" Header="Дата подачи"/>
+                                            <GridViewColumn DisplayMemberBinding="{Binding ProblemType.Name}" Header="Проблема"/>
+                                            <GridViewColumn DisplayMemberBinding="{Binding Description}" Header="Описание"/>
+                                            <GridViewColumn DisplayMemberBinding="{Binding Client.Phone}" Header="Номер клиента"/>
+                                            <GridViewColumn DisplayMemberBinding="{Binding StatusApplication.Name}" Header="Статус заявки"/>
+                                            <GridViewColumn DisplayMemberBinding="{Binding StageApplication.Name}" Header="Стадия заявки"/>
+                                            <GridViewColumn DisplayMemberBinding="{Binding Employee.Surname}" Header="Исполнитель"/>
+                                            <GridViewColumn>
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                            <Button x:Name="BtnDeleteApplication" Content="Удалить" Style="{DynamicResource ButtonStyleColumn}"/>
+                                                            <Button Content="Редактировать" Style="{DynamicResource ButtonStyleColumn}"/>
+                                                            <Button Content="Завершить" Style="{DynamicResource ButtonStyleColumn}"/>
+                                                        </StackPanel>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                        </GridView.Columns>
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+                            <Label Content="{Binding ItemsSource.Count, ElementName=LBoxApplications, Mode=OneWay, StringFormat =Количество элементов: {0} }" Grid.Row="2" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="10"  />
+                        </Grid>
+                    </Border>
+                </TabItem.Content>
+            </TabItem>
+        </TabControl>
+        <Button x:Name="BtnExit" 
+            Width="150" 
+            Height="40" 
+            VerticalAlignment="Bottom" 
+            Margin="0 10 0 10" 
+            Content="Выйти" 
+            Background="Transparent" 
+            BorderThickness="0" 
+            Click="BtnExit_Click"
+            Style="{DynamicResource ButtonStyleBase}"/>
+
 
 
     </Grid>

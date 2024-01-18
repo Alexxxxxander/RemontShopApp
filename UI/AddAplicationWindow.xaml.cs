@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace RemontApp.UI
 {
     /// <summary>
-    /// Логика взаимодействия для StatisticWindow.xaml
+    /// Логика взаимодействия для AddAplicationWindow.xaml
     /// </summary>
-    public partial class StatisticWindow : Window
+    public partial class AddAplicationWindow : Window
     {
-        public StatisticWindow()
+        public AddAplicationWindow()
         {
             InitializeComponent();
         }

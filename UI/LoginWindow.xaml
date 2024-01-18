@@ -30,7 +30,8 @@
                     Height="40"
                     Width="200"
                     Margin="10" Style="{DynamicResource ButtonStyleBase}"
-                    Background="#FFE0BAFF" Click="BtnEnter_Click"/>
+                    Click="BtnEnter_Click"
+                    IsDefault="True"/>
         </StackPanel>
 
     </Grid>
