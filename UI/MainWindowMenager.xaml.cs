@@ -20,12 +20,49 @@ namespace RemontApp.UI
     /// </summary>
     public partial class MainWindowMenager : Window
     {
+        public class Issues
+        {
+            public string Type { get; set; }
+            public int Count { get; set; }
+        }
+
         public MainWindowMenager()
         {
             InitializeComponent();
 
             LBoxApplications.ItemsSource = RemontPracticeEntities.GetContext().Applications.ToList();
+            int completedApplications = RemontPracticeEntities.GetContext().Applications.Where(x => x.DateEnd > DateTime.MinValue).ToList().Count();
+            TxtBlockNumApplications.Text += completedApplications;
+            var dates = RemontPracticeEntities.GetContext().Applications.Where(x => x.DateEnd > DateTime.MinValue).ToList();
+            TimeSpan timeSpan = TimeSpan.Zero;
+            foreach (var date in dates)
+            {
+                timeSpan += (TimeSpan)((DateTime)date.DateEnd - date.DateStart);
+            }
+            TimeSpan avg = TimeSpan.FromTicks(timeSpan.Ticks / completedApplications);
+            TxtBlockAvgTime.Text += avg.Days + " дней, " + avg.Hours + " часов, " + avg.Minutes + " минут.";
+            
+            List<Issues> issuesList = new List<Issues>();
+
+            var originalIssues = RemontPracticeEntities.GetContext().Applications.ToList();
+            foreach (var issue in originalIssues)
+            {
+                Issues currentIssue = new Issues() { Count = 1, Type = issue.ProblemType.Name };
+                if(issuesList.Select(x => x.Type).ToList().Contains(currentIssue.Type)){
+                    issuesList.Where(x => x.Type == currentIssue.Type).ToList().First().Count++;
+                }
+                else
+                {
+                    issuesList.Add(currentIssue);
+                }
+            }
+            lstIssues.ItemsSource = issuesList;
+
+
+
+
         }
+
 
 
 
@@ -41,11 +78,11 @@ namespace RemontApp.UI
 
         private void BtnDeleteApplication_Click(object sender, RoutedEventArgs e)
         {
-            
-            DB.Application selected = (DB.Application)LBoxApplications.SelectedItem;           
-            if(RemontPracticeEntities.GetContext().Applications.Any( x=> x.Id == selected.Id ))
+
+            DB.Application selected = (sender as Button).DataContext as DB.Application;
+            if (RemontPracticeEntities.GetContext().Applications.Any( x=> x.Id == selected.Id ))
             {
-                MessageBox.Show("Sha bi udalil");
+                MessageBox.Show($"Sha bi udalil {RemontPracticeEntities.GetContext().Applications.Where(x => x.Id == selected.Id).First().Id} ");
             }
         }
 
@@ -64,7 +101,13 @@ namespace RemontApp.UI
 
         private void BtnAddAplication_Click(object sender, RoutedEventArgs e)
         {
-            AddAplicationWindow addAplicationWindow = new AddAplicationWindow();
+            AddAplicationWindow addAplicationWindow = new AddAplicationWindow(null);
+            addAplicationWindow.Show();
+        }
+
+        private void BtnEditApplication_Click(object sender, RoutedEventArgs e)
+        {
+            AddAplicationWindow addAplicationWindow = new AddAplicationWindow((sender as Button).DataContext as DB.Application);
             addAplicationWindow.Show();
         }
     }
