@@ -56,7 +56,7 @@ namespace RemontApp.UI
                     issuesList.Add(currentIssue);
                 }
             }
-            lstIssues.ItemsSource = issuesList.OrderBy(x => x.Count);
+            lstIssues.ItemsSource = issuesList.OrderByDescending(x => x.Count);
 
 
 

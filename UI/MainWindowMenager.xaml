@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RemontApp.UI"
         mc:Ignorable="d"
-        Title="Remont" Height="450" Width="800">
+        Title="Remont" Height="450" Width="800"  MinHeight="200" MinWidth="300" WindowState="Maximized" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="150"/>
@@ -44,7 +44,7 @@
                                  Margin="10 30 0 0"
                                  TextChanged="TxtBoxSearch_TextChanged" 
                                  FontWeight="Bold"/>
-                            <Label Content="Поиск по устройствам" Margin="5 0 0 0 "/>
+                            <Label Content="Поиск по устройствам" Margin="5 0 0 0 " HorizontalAlignment="Left" VerticalAlignment="Top"/>
                             <ListView Grid.Row="1" 
                                   Margin="10 0 10 0" 
                                   x:Name="LBoxApplications"
@@ -105,13 +105,15 @@
                                        VerticalAlignment="Top"
                                        FontSize="20"/>
                             <ListView Name="lstIssues"
+                                      ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                                      VerticalAlignment="Top"
                                       Margin="10 120 0 10"
                                       Width="280"
                                       HorizontalAlignment="Left"
                                       Height="auto"
                                       MaxHeight="400">
                                 <ListView.View>
-                                    <GridView>
+                                    <GridView AllowsColumnReorder="False">
                                         <GridViewColumn Header="Тип" DisplayMemberBinding="{Binding Type}" Width="200"/>
                                         <GridViewColumn Header="Количество" DisplayMemberBinding="{Binding Count}" Width="80" />
                                     </GridView>

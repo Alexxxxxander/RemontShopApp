@@ -6,33 +6,38 @@
         xmlns:local="clr-namespace:RemontApp"
         xmlns:uc="clr-namespace:RemontApp.UI.UserControl"
         mc:Ignorable="d"
-        Title="Remont" Height="450" Width="800">
+        Title="Remont" Height="450" Width="800" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowState="Maximized" >
     <Window.Resources>
         
     </Window.Resources>
     <Grid>
-        <Label Content="Вход" 
-               VerticalAlignment="Top" 
-               HorizontalAlignment="Center" 
-               FontSize="30"
-               Margin="0 20 0 0" />
-        <StackPanel VerticalAlignment="Center" 
-                    HorizontalAlignment="Center"
-                    Orientation="Vertical">
-            <TextBox Height="40"
-                     Width="200"
-                     Margin="10" Style="{DynamicResource TextBoxStyleBase}"
-                     Name="TxtBoxLogin"/>
-            <uc:UserControlPasswordBox Margin="10" 
-                                       x:Name="UCPassword"/>
-            <Button x:Name="BtnEnter" 
-                    Content="Вход"
-                    Height="40"
-                    Width="200"
-                    Margin="10" Style="{DynamicResource ButtonStyleBase}"
-                    Click="BtnEnter_Click"
-                    IsDefault="True"/>
-        </StackPanel>
+        <Border BorderBrush="Transparent" CornerRadius="20" Background="LightBlue" Height="300" Width="500">
+            <Grid>
+                <Label Content="Вход" 
+       VerticalAlignment="Top" 
+       HorizontalAlignment="Center" 
+       FontSize="30"
+       Margin="0 0 0 0" />
+                <StackPanel VerticalAlignment="Center" 
+            HorizontalAlignment="Center"
+            Orientation="Vertical">
+                    <TextBox Height="40"
+             Width="200"
+             Margin="10" Style="{DynamicResource TextBoxStyleBase}"
+             Name="TxtBoxLogin"/>
+                    <uc:UserControlPasswordBox Margin="10" 
+                               x:Name="UCPassword"/>
+                    <Button x:Name="BtnEnter" 
+            Content="Вход"
+            Height="40"
+            Width="200"
+            Margin="10" Style="{DynamicResource ButtonStyleBase}"
+            Click="BtnEnter_Click"
+            IsDefault="True"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+        
 
     </Grid>
 </Window>
