@@ -25,6 +25,7 @@ namespace RemontApp.DB
         public Nullable<int> EmployeeId { get; set; }
         public Nullable<System.DateTime> DateEnd { get; set; }
         public string Comment { get; set; }
+        public Nullable<System.DateTime> LastModify { get; set; }
     
         public virtual Client Client { get; set; }
         public virtual Employee Employee { get; set; }

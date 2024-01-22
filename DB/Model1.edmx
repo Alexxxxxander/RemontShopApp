@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Хранилище RemontPracticeModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Хранилище RemontPracticeModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Application">
           <Key>
             <PropertyRef Name="Id" />
@@ -20,6 +20,7 @@
           <Property Name="EmployeeId" Type="int" />
           <Property Name="DateEnd" Type="datetime" />
           <Property Name="Comment" Type="nvarchar" MaxLength="200" />
+          <Property Name="LastModify" Type="datetime" />
         </EntityType>
         <EntityType Name="Client">
           <Key>
@@ -212,8 +213,7 @@
             <End Role="User" EntitySet="User" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="RemontPracticeModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -237,6 +237,7 @@
           <NavigationProperty Name="ProblemType" Relationship="Self.FK_Application_ProblemType" FromRole="Application" ToRole="ProblemType" />
           <NavigationProperty Name="StageApplication" Relationship="Self.FK_Application_StageApplication" FromRole="Application" ToRole="StageApplication" />
           <NavigationProperty Name="StatusApplication" Relationship="Self.FK_Application_StatusApplication" FromRole="Application" ToRole="StatusApplication" />
+          <Property Name="LastModify" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="Client">
           <Key>
@@ -447,6 +448,7 @@
           <EntitySetMapping Name="Applications">
             <EntityTypeMapping TypeName="RemontPracticeModel.Application">
               <MappingFragment StoreEntitySet="Application">
+                <ScalarProperty Name="LastModify" ColumnName="LastModify" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="DateStart" ColumnName="DateStart" />
                 <ScalarProperty Name="Appliance" ColumnName="Appliance" />

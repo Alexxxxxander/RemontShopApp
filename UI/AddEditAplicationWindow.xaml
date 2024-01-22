@@ -63,7 +63,7 @@
                    VerticalAlignment="Center" 
                    Grid.Row="4" 
                    HorizontalAlignment="Right"/>
-        <TextBox Text="{Binding Appliance}" 
+        <TextBox Text="{Binding Description}" 
                  Width="300" Height="40"
                  VerticalAlignment="Center"
                  Style="{DynamicResource TextBoxStyleBase}"

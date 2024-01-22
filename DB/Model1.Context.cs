@@ -15,18 +15,17 @@ namespace RemontApp.DB
     
     public partial class RemontPracticeEntities : DbContext
     {
-        private static RemontPracticeEntities _context;
         public RemontPracticeEntities()
             : base("name=RemontPracticeEntities")
         {
         }
+        private static RemontPracticeEntities _context ;
         public static RemontPracticeEntities GetContext()
         {
-            if(_context == null )
-                _context = new RemontPracticeEntities();
+            if(_context == null)
+                return _context = new RemontPracticeEntities();
             return _context;
         }
-    
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();

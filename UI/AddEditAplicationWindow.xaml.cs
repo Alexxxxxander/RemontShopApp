@@ -55,6 +55,11 @@ namespace RemontApp.UI
                 }
 
             }
+            else
+            {
+                DatePickTxtBox.Text = DateTime.Now.ToString();
+                CmbBoxStatus.SelectedIndex = 0;
+            }
         }
 
         private void BtnSave_Click(object sender, RoutedEventArgs e)
@@ -74,6 +79,7 @@ namespace RemontApp.UI
             }
             else
             {
+                
                 _currentApplication.ClientId = Convert.ToInt32(RemontPracticeEntities.GetContext().Clients.Where(x => x.Phone.Contains(CmbBoxClient.SelectedValue.ToString())).Select(x => x.Id).FirstOrDefault());
                 if (_currentApplication.Id == 0)
                 {
