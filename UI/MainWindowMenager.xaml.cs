@@ -4,6 +4,8 @@ using System.Data.Entity;
 using System.Linq;
 using System.Runtime.Remoting.Contexts;
 using System.Text;
+using LiveCharts;
+using LiveCharts.Wpf;
 using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
@@ -31,6 +33,7 @@ namespace RemontApp.UI
 
         private Timer databaseCheckTimer;
         private RemontPracticeEntities context = RemontPracticeEntities.GetContext();
+
 
         public MainWindowMenager()
         {
@@ -63,6 +66,7 @@ namespace RemontApp.UI
                     issuesList.Add(currentIssue);
                 }
             }
+            
             lstIssues.ItemsSource = issuesList.OrderByDescending(x => x.Count);
 
             databaseCheckTimer = new Timer(60000); // 1 минута = 60 000 миллисекунд
@@ -70,9 +74,9 @@ namespace RemontApp.UI
             databaseCheckTimer.Start();
 
 
-
-
         }
+
+        
 
         private async Task CheckDatabaseChangesAsync()
         {
@@ -121,10 +125,18 @@ namespace RemontApp.UI
         {
 
             DB.Application selected = (sender as Button).DataContext as DB.Application;
-            if (RemontPracticeEntities.GetContext().Applications.Any( x=> x.Id == selected.Id ))
+            try
             {
-                MessageBox.Show($"Sha bi udalil {RemontPracticeEntities.GetContext().Applications.Where(x => x.Id == selected.Id).First().Id} ");
+                RemontPracticeEntities.GetContext().Applications.Remove(selected);
+                RemontPracticeEntities.GetContext().SaveChanges();
+                MessageBox.Show("Запись удалена");
+                LBoxApplications.ItemsSource = RemontPracticeEntities.GetContext().Applications.ToList();
             }
+            catch(Exception ex) {
+                MessageBox.Show(ex.Message );
+            }
+
+
         }
 
         private void TxtBoxSearch_TextChanged(object sender, TextChangedEventArgs e)

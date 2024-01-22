@@ -70,7 +70,6 @@ namespace RemontApp.UI
             {
                 // Переносим логику сохранения в метод
                 SaveApplication();
-                MessageBox.Show("Информация сохранена");
                 Close(); // Закрываем окно после сохранения
             }
             catch (Exception ex)
@@ -92,14 +91,26 @@ namespace RemontApp.UI
             _currentApplication.Client = RemontPracticeEntities.GetContext().Clients
                 .FirstOrDefault(x => x.Phone == CmbBoxClient.SelectedItem.ToString());
 
+            _currentApplication.ClientId = RemontPracticeEntities.GetContext().Clients
+                .FirstOrDefault(x => x.Phone == CmbBoxClient.SelectedItem.ToString()).Id;
+
             _currentApplication.Employee = RemontPracticeEntities.GetContext().Employees
                 .FirstOrDefault(x => x.Surname == CmbBoxExecutor.SelectedItem.ToString());
+
+            _currentApplication.EmployeeId = RemontPracticeEntities.GetContext().Employees
+                .FirstOrDefault(x => x.Surname == CmbBoxExecutor.SelectedItem.ToString()).Id;
 
             _currentApplication.ProblemType = RemontPracticeEntities.GetContext().ProblemTypes
                 .FirstOrDefault(x => x.Name == CmbBoxProblem.SelectedItem.ToString());
 
             _currentApplication.StatusApplication = RemontPracticeEntities.GetContext().StatusApplications
                 .FirstOrDefault(x => x.Name == CmbBoxStatus.SelectedItem.ToString());
+
+            _currentApplication.ProblemTypeId = RemontPracticeEntities.GetContext().ProblemTypes
+                .FirstOrDefault(x => x.Name == CmbBoxProblem.SelectedItem.ToString()).Id;
+
+            _currentApplication.StatusId = RemontPracticeEntities.GetContext().StatusApplications
+                .FirstOrDefault(x => x.Name == CmbBoxStatus.SelectedItem.ToString()).Id;
 
             // Дополнительные проверки и установки свойств...
 
@@ -110,6 +121,8 @@ namespace RemontApp.UI
             }
 
             RemontPracticeEntities.GetContext().SaveChanges();
+            MessageBox.Show("Информация сохранена");
+
         }
     }
 }

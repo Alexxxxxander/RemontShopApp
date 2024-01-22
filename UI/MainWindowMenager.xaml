@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RemontApp.UI"
+        xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         mc:Ignorable="d"
         Title="Remont" Height="450" Width="800"  MinHeight="200" MinWidth="300" WindowState="Maximized" WindowStartupLocation="CenterScreen">
     <Grid>
@@ -64,10 +65,9 @@
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
                                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                                        <Button x:Name="BtnDeleteApplication" Content="Удалить" Style="{DynamicResource ButtonStyleColumn}" Click="BtnDeleteApplication_Click"/>
-                                                        <Button x:Name="BtnEditApplication" Content="Редактировать" Style="{DynamicResource ButtonStyleColumn}" Click="BtnEditApplication_Click"/>
-                                                        <Button Content="Завершить" Style="{DynamicResource ButtonStyleColumn}"/>
-                                                    </StackPanel>
+                                                        <Button x:Name="BtnDeleteApplication" Background="Transparent" Content="Удалить" Style="{DynamicResource ButtonStyleColumn}" Click="BtnDeleteApplication_Click"/>
+                                                        <Button x:Name="BtnEditApplication" Background="Transparent" Content="Редактировать" Style="{DynamicResource ButtonStyleColumn}" Click="BtnEditApplication_Click"/>
+                                                        </StackPanel>
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
@@ -114,12 +114,11 @@
                                       MaxHeight="400">
                                 <ListView.View>
                                     <GridView AllowsColumnReorder="False">
-                                        <GridViewColumn Header="Тип" DisplayMemberBinding="{Binding Type}" Width="200"/>
+                                        <GridViewColumn Header="Тип неисправности" DisplayMemberBinding="{Binding Type}" Width="200"/>
                                         <GridViewColumn Header="Количество" DisplayMemberBinding="{Binding Count}" Width="80" />
                                     </GridView>
                                 </ListView.View>
                             </ListView>
-
                         </Grid>
                     </Border>
                 </TabItem.Content>

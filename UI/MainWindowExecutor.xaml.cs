@@ -23,6 +23,7 @@ namespace RemontApp.UI
         public MainWindowExecutor()
         {
             InitializeComponent();
+            LBoxApplications.ItemsSource = RemontPracticeEntities.GetContext().Applications.ToList();
         }
 
         private void BtnExit_Click(object sender, RoutedEventArgs e)
