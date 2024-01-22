@@ -91,6 +91,7 @@ namespace RemontApp.UI
                         Dispatcher.Invoke(() =>
                         {
                             MessageBox.Show($"Изменилась запись");
+                            LBoxApplications.ItemsSource = RemontPracticeEntities.GetContext().Applications.ToList();
                         });
                     }
                 }

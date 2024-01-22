@@ -24,77 +24,93 @@ namespace RemontApp.UI
         public AddAplicationWindow(DB.Application currentApplication)
         {
             InitializeComponent();
+            if (currentApplication != null)
+            {
+                _currentApplication = currentApplication;
+            }
             try
             {
-                DataContext = RemontPracticeEntities.GetContext().Applications;
+                // Устанавливаем DataContext на сам объект _currentApplication
+                DataContext = _currentApplication;
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
-            if (currentApplication != null)
-            {
-                _currentApplication = currentApplication;
-            }
-            DataContext = _currentApplication;         
+
+
+            // Заполняем комбо-боксы
             CmbBoxClient.ItemsSource = RemontPracticeEntities.GetContext().Clients.Select(x => x.Phone).ToList();
             CmbBoxExecutor.ItemsSource = RemontPracticeEntities.GetContext().Employees.ToList().Select(x => x.Surname).ToList();
-            CmbBoxProblem.ItemsSource = RemontPracticeEntities.GetContext().ProblemTypes.ToList().Select(x =>x.Name).ToList();
+            CmbBoxProblem.ItemsSource = RemontPracticeEntities.GetContext().ProblemTypes.ToList().Select(x => x.Name).ToList();
             CmbBoxStatus.ItemsSource = RemontPracticeEntities.GetContext().StatusApplications.Select(x => x.Name).ToList();
-            if(_currentApplication.Id > 0)
-            {
-                CmbBoxClient.SelectedIndex = currentApplication.ClientId - 1;
-                if(currentApplication.EmployeeId >0 )
-                {
-                    CmbBoxExecutor.SelectedIndex = (int)(currentApplication.EmployeeId - 1);
-                }
-                CmbBoxProblem.SelectedIndex = currentApplication.ProblemTypeId - 1;
-                if(currentApplication.StatusId > 0)
-                {
-                    CmbBoxStatus.SelectedIndex = (int)(currentApplication.StatusId - 1);
-                }
 
+            // Устанавливаем значения в комбо-боксы на основе текущего элемента
+            CmbBoxClient.SelectedItem = _currentApplication.Client?.Phone;
+            CmbBoxExecutor.SelectedItem = _currentApplication.Employee?.Surname;
+            CmbBoxProblem.SelectedItem = _currentApplication.ProblemType?.Name;
+            CmbBoxStatus.SelectedItem = _currentApplication.StatusApplication?.Name;
+
+
+            if (_currentApplication.Id > 0)
+            {
+                // Здесь можно обработать другие значения
             }
             else
             {
                 DatePickTxtBox.Text = DateTime.Now.ToString();
                 CmbBoxStatus.SelectedIndex = 0;
             }
+
         }
 
         private void BtnSave_Click(object sender, RoutedEventArgs e)
         {
-            StringBuilder errors = new StringBuilder();
-            if (DatePickTxtBox.Text == null || DatePickTxtBox.Text.Length < 1)
+            try
             {
-                errors.AppendLine("Дата заполнена неверно");
+                // Переносим логику сохранения в метод
+                SaveApplication();
+                MessageBox.Show("Информация сохранена");
+                Close(); // Закрываем окно после сохранения
             }
-            if (TxtBoxAppliance.Text.Length < 1)
+            catch (Exception ex)
             {
-                errors.AppendLine("Укажите устройство");
+                MessageBox.Show(ex.Message);
             }
-            if (errors.Length > 0)
+        }
+        private void SaveApplication()
+        {
+            // Проверяем, что установлены значения в комбо-боксах
+            if (CmbBoxClient.SelectedItem == null || CmbBoxExecutor.SelectedItem == null ||
+                CmbBoxProblem.SelectedItem == null || CmbBoxStatus.SelectedItem == null)
             {
-                MessageBox.Show(errors.ToString());
+                MessageBox.Show("Не все поля заполнены");
+                return;
             }
-            else
+
+            // Заполняем свойства объекта _currentApplication на основе выбранных значений в комбо-боксах
+            _currentApplication.Client = RemontPracticeEntities.GetContext().Clients
+                .FirstOrDefault(x => x.Phone == CmbBoxClient.SelectedItem.ToString());
+
+            _currentApplication.Employee = RemontPracticeEntities.GetContext().Employees
+                .FirstOrDefault(x => x.Surname == CmbBoxExecutor.SelectedItem.ToString());
+
+            _currentApplication.ProblemType = RemontPracticeEntities.GetContext().ProblemTypes
+                .FirstOrDefault(x => x.Name == CmbBoxProblem.SelectedItem.ToString());
+
+            _currentApplication.StatusApplication = RemontPracticeEntities.GetContext().StatusApplications
+                .FirstOrDefault(x => x.Name == CmbBoxStatus.SelectedItem.ToString());
+
+            // Дополнительные проверки и установки свойств...
+
+            // Сохраняем изменения в базе данных
+            if (_currentApplication.Id == 0)
             {
-                
-                _currentApplication.ClientId = Convert.ToInt32(RemontPracticeEntities.GetContext().Clients.Where(x => x.Phone.Contains(CmbBoxClient.SelectedValue.ToString())).Select(x => x.Id).FirstOrDefault());
-                if (_currentApplication.Id == 0)
-                {
-                    
-                    RemontPracticeEntities.GetContext().Applications.Add(_currentApplication);
-                }
-                try
-                {
-                    RemontPracticeEntities.GetContext().SaveChanges();
-                    MessageBox.Show("Информация сохранена");
-                }
-                catch(Exception ex) {
-                    MessageBox.Show(ex.Message);
-                }
+                RemontPracticeEntities.GetContext().Applications.Add(_currentApplication);
             }
+
+            RemontPracticeEntities.GetContext().SaveChanges();
         }
     }
 }
+
