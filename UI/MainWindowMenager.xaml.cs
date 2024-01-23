@@ -32,6 +32,7 @@ namespace RemontApp.UI
         }
 
         private Timer databaseCheckTimer;
+
         private RemontPracticeEntities context = RemontPracticeEntities.GetContext();
 
 
@@ -96,7 +97,7 @@ namespace RemontApp.UI
                     // Ваш запрос для проверки изменений в таблице
                     var changes = DB.RemontPracticeEntities.GetContext().Applications
                         .ToList()
-                        .Where(entity => entity.LastModify > DateTime.Now.AddMinutes((double)-1)); // Пример условия изменений за последнюю минуту
+                        .Where(entity => entity.LastModify > DateTime.Now.AddMinutes((double)-2)); // Пример условия изменений за последнюю минуту
 
                     if (changes.Any())
                     {
@@ -104,7 +105,8 @@ namespace RemontApp.UI
                         Dispatcher.Invoke(() =>
                         {
                             MessageBox.Show($"Изменилась запись");
-                            LBoxApplications.ItemsSource = RemontPracticeEntities.GetContext().Applications.ToList();
+                            Console.WriteLine($"Количество изменений {changes.Count()}");
+                            LBoxApplications.ItemsSource = RemontPracticeEntities.GetContext().Applications.ToList().OrderByDescending(x => x.LastModify);
                         });
                     }
                 }
