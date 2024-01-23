@@ -39,35 +39,44 @@ namespace RemontApp.UI
         {
             InitializeComponent();
 
+            // Заполнение ListBox заявками из базы данных
             LBoxApplications.ItemsSource = RemontPracticeEntities.GetContext().Applications.ToList();
 
-            int completedApplications = RemontPracticeEntities.GetContext().Applications.Where(x => x.DateEnd > DateTime.MinValue).ToList().Count();
-            TxtBlockNumApplications.Text += completedApplications;
-            var dates = RemontPracticeEntities.GetContext().Applications.Where(x => x.DateEnd > DateTime.MinValue).ToList();
-            TimeSpan timeSpan = TimeSpan.Zero;
-            foreach (var date in dates)
-            {
-                timeSpan += (TimeSpan)((DateTime)date.DateEnd - date.DateStart);
-            }
-            TimeSpan avg = TimeSpan.FromTicks(timeSpan.Ticks / completedApplications);
-            TxtBlockAvgTime.Text += avg.Days + " дней, " + avg.Hours + " часов, " + avg.Minutes + " минут.";
-            
-            List<Issues> issuesList = new List<Issues>();
+            // Подсчет завершенных заявки
+            int completedApplicationsCount = RemontPracticeEntities.GetContext().Applications
+                .Count(x => x.DateEnd > DateTime.MinValue);
+            TxtBlockNumApplications.Text += completedApplicationsCount;
 
+            // Вычисление среднего времени выполнения заявки
+            var completedDates = RemontPracticeEntities.GetContext().Applications
+                .Where(x => x.DateEnd > DateTime.MinValue).ToList();
+            TimeSpan totalTime = TimeSpan.Zero;
+            foreach (var date in completedDates)
+            {
+                totalTime += (TimeSpan)(date.DateEnd - date.DateStart);
+            }
+            TimeSpan avgTime = TimeSpan.FromTicks(totalTime.Ticks / completedApplicationsCount);
+            TxtBlockAvgTime.Text += $"{avgTime.Days} дней, {avgTime.Hours} часов, {avgTime.Minutes} минут.";
+
+            // Формирование списка проблем с их количеством
+            List<Issues> issuesList = new List<Issues>();
             var originalIssues = RemontPracticeEntities.GetContext().Applications.ToList();
             foreach (var issue in originalIssues)
             {
                 Issues currentIssue = new Issues() { Count = 1, Type = issue.ProblemType.Name };
-                if(issuesList.Select(x => x.Type).ToList().Contains(currentIssue.Type)){
-                    issuesList.Where(x => x.Type == currentIssue.Type).ToList().First().Count++;
+                if (issuesList.Select(x => x.Type).ToList().Contains(currentIssue.Type))
+                {
+                    issuesList.Where(x => x.Type == currentIssue.Type).First().Count++;
                 }
                 else
                 {
                     issuesList.Add(currentIssue);
                 }
             }
-            
+
+            // Заполнение ListBox проблемами с сортировкой по количеству
             lstIssues.ItemsSource = issuesList.OrderByDescending(x => x.Count);
+
 
             databaseCheckTimer = new Timer(60000); // 1 минута = 60 000 миллисекунд
             databaseCheckTimer.Elapsed += async (sender, e) => await CheckDatabaseChangesAsync();
@@ -143,7 +152,8 @@ namespace RemontApp.UI
         {
             if( TxtBoxSearch.Text.Length > 0 )
             {
-                LBoxApplications.ItemsSource = RemontPracticeEntities.GetContext().Applications.ToList().Where(x => x.Appliance.Contains(TxtBoxSearch.Text)).ToList();
+                LBoxApplications.ItemsSource = RemontPracticeEntities.GetContext().Applications.ToList()
+                    .Where(x => x.Appliance.ToLower().Contains(TxtBoxSearch.Text.ToLower())).ToList();
             }
             else
             {
